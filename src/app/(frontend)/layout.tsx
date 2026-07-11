@@ -2,6 +2,7 @@ import "~/styles/globals.css";
 
 import { type Metadata } from "next";
 import { IBM_Plex_Sans } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 
 export const metadata: Metadata = {
   title: "Matthew | Engineer and computer scientist",
@@ -24,7 +25,10 @@ export default function FrontendLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className={ibmPlexSans.variable}>
-      <body>{children}</body>
+      <body>
+        {children}
+        <Analytics />
+      </body>
     </html>
   );
 }
