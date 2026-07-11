@@ -4,7 +4,9 @@ type PortfolioFooterProps = {
   name?: string;
 };
 
-export function PortfolioFooter({ name = "Matthew" }: PortfolioFooterProps) {
+export function PortfolioFooter({
+  name = "Matthew Williams",
+}: PortfolioFooterProps) {
   return (
     <footer className="site-footer">
       <span>

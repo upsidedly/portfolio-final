@@ -134,12 +134,13 @@ a:hover {
 }
 
 .hero-identity h1 {
-  max-width: 11ch;
+  max-width: none;
   margin: 0;
   font-size: 1.18rem;
   font-weight: 500;
   letter-spacing: -0.035em;
   line-height: 1.25;
+  white-space: nowrap;
 }
 
 .hero-identity p {
@@ -362,6 +363,11 @@ a:hover {
   text-decoration: none;
 }
 
+.contact-button:hover {
+  background: color-mix(in srgb, var(--accent) 88%, var(--text));
+  color: var(--canvas);
+}
+
 .contact-email-label {
   display: block;
   margin-bottom: 2px;
@@ -391,6 +397,62 @@ a:hover {
   padding: 15px 4px 0;
   color: var(--muted);
   font-size: 0.85rem;
+}
+
+/* Not found */
+.not-found-panel {
+  display: grid;
+  min-height: 220px;
+  grid-template-columns: 112px minmax(0, 1fr);
+  border: 1px solid var(--line);
+}
+
+.not-found-code,
+.not-found-copy {
+  padding: 20px;
+}
+
+.not-found-code {
+  border-right: 1px solid var(--line);
+  color: var(--accent);
+  font-size: 0.78rem;
+  font-weight: 550;
+  letter-spacing: 0.08em;
+}
+
+.not-found-copy {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.not-found-copy h1 {
+  margin: 0;
+  font-size: 1.18rem;
+  font-weight: 500;
+  letter-spacing: -0.035em;
+  line-height: 1.25;
+}
+
+.not-found-copy p {
+  max-width: 38ch;
+  margin: 8px 0 20px;
+  color: var(--muted);
+}
+
+.not-found-link {
+  display: inline-block;
+  background: var(--accent);
+  padding: 8px 12px;
+  color: var(--canvas);
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.not-found-link:hover {
+  background: color-mix(in srgb, var(--accent) 88%, var(--text));
+  color: var(--canvas);
 }
 
 .admin-tools {
@@ -926,6 +988,16 @@ a:hover {
   .hero-grid,
   .project-hero {
     grid-template-columns: 1fr;
+  }
+
+  .not-found-panel {
+    min-height: 240px;
+    grid-template-columns: 1fr;
+  }
+
+  .not-found-code {
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
   }
 
   .portfolio-grid > * + * {

@@ -5,7 +5,9 @@ type PortfolioHeaderProps = {
   name?: string;
 };
 
-export function PortfolioHeader({ name = "Matthew" }: PortfolioHeaderProps) {
+export function PortfolioHeader({
+  name = "Matthew Williams",
+}: PortfolioHeaderProps) {
   return (
     <header className="site-header">
       <Link className="site-mark" href="/" aria-label={`${name} home`}>

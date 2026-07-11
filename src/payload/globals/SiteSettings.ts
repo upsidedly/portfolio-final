@@ -17,7 +17,7 @@ export const SiteSettings: GlobalConfig = {
       name: "name",
       type: "text",
       required: true,
-      defaultValue: "Matthew",
+      defaultValue: "Matthew Williams",
     },
     {
       name: "role",

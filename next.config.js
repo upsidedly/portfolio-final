@@ -6,6 +6,10 @@ import "./src/env.js";
 import { withPayload } from "@payloadcms/next/withPayload";
 
 /** @type {import("next").NextConfig} */
-const config = {};
+const config = {
+  experimental: {
+    globalNotFound: true,
+  },
+};
 
 export default withPayload(config);
