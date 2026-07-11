@@ -1,0 +1,117 @@
+.google-login {
+  margin-bottom: 1.5rem;
+}
+
+.google-login p {
+  color: var(--theme-elevation-600);
+  margin-bottom: 0.75rem;
+}
+
+.google-login button {
+  width: 100%;
+  min-height: 3rem;
+  border: 1px solid var(--theme-elevation-400);
+  border-radius: 0.25rem;
+  background: var(--theme-elevation-1000);
+  color: var(--theme-elevation-0);
+  cursor: pointer;
+  font: inherit;
+  font-weight: 600;
+}
+
+.google-login button:disabled {
+  cursor: wait;
+  opacity: 0.65;
+}
+
+.portfolio-brand-logo {
+  position: relative;
+  display: block;
+  width: 7rem !important;
+  min-width: 7rem;
+  height: 7rem !important;
+  margin: 0 auto;
+  overflow: hidden;
+  border-radius: 999px;
+}
+
+.portfolio-brand-icon {
+  position: relative;
+  display: block;
+  width: 30px !important;
+  min-width: 30px;
+  height: 30px !important;
+  overflow: hidden;
+  border-radius: 999px;
+  flex: 0 0 30px !important;
+}
+
+.step-nav__home:has(.portfolio-brand-icon) {
+  width: 30px;
+  height: 30px;
+  flex: 0 0 30px;
+}
+
+.step-nav__home:has(.portfolio-brand-icon) > span {
+  width: 30px !important;
+  height: 30px !important;
+  overflow: visible !important;
+}
+
+.portfolio-brand-logo img,
+.portfolio-brand-icon img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover;
+}
+
+.post-content-editor .field-label {
+  display: none;
+}
+
+.post-content-editor {
+  margin-top: 0.5rem;
+}
+
+.post-content-editor .rich-text-lexical__wrap {
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.post-content-editor .editor-container {
+  font-size: 1.08rem;
+  line-height: 1.75;
+}
+
+.post-content-editor [contenteditable="true"] {
+  min-height: clamp(28rem, 58vh, 46rem);
+  padding: 1rem 0 4rem;
+}
+
+.dashboard-home-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  padding: 1rem 1.25rem;
+  border: 1px solid var(--theme-elevation-150);
+  border-radius: 0.5rem;
+  background: var(--theme-elevation-50);
+}
+
+.dashboard-home-link p {
+  margin: 0;
+  color: var(--theme-elevation-600);
+}
+
+.dashboard-home-link a {
+  flex: 0 0 auto;
+  padding: 0.65rem 0.9rem;
+  border-radius: 0.35rem;
+  background: var(--theme-elevation-900);
+  color: var(--theme-elevation-0);
+  font-weight: 600;
+  text-decoration: none;
+}

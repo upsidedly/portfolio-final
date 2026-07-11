@@ -1,29 +1,51 @@
-# Create T3 App
+# Portfolio
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+A dark, editorial portfolio and collection of musings built with Next.js, Payload CMS, Neon,
+Better Auth, and Vercel Blob.
 
-## What's next? How do I make an app with this?
+## Local development
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+Copy the variables from `.env.example` into `.env`, then run:
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+```bash
+bun install
+bun run db:push
+bun run dev --port 3002
+```
 
-- [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [Drizzle](https://orm.drizzle.team)
-- [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
+The portfolio is available at `http://localhost:3002` and Payload is mounted at
+`http://localhost:3002/admin`.
 
-## Learn More
+The public contact links include GitHub, X, LinkedIn, and the résumé stored at
+`public/matthew-williams-resume.pdf`. They can be replaced from Site settings.
 
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
+## Content
 
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
+- **Site settings** controls the name, role, introduction, current focus,
+  availability, email, and social links shown on the public site.
+- **Projects** controls selected work, project images, ordering, case-study copy,
+  technologies, and external links.
+- **Musings** supports drafts, autosave, rich-text writing, automatic slugs, and
+  real-page previews.
+- **Media** uploads to Vercel Blob when `BLOB_READ_WRITE_TOKEN` is present and
+  falls back to `public/media` locally.
 
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
+## Google OAuth
 
-## How do I deploy this?
+Create a Web application OAuth client in Google Cloud Console and add:
 
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+- `http://localhost:3002/api/auth/callback/google`
+- `https://your-production-domain.com/api/auth/callback/google`
+
+Only the address in `PAYLOAD_ADMIN_EMAIL` can enter the CMS.
+
+## Vercel
+
+Add the variables from `.env.example` to the Vercel project. Set
+`BETTER_AUTH_URL` to the production origin and use `bun run build:vercel` as the
+Build Command. Connect a Vercel Blob store to inject `BLOB_READ_WRITE_TOKEN`.
+
+The Payload tables live in the `payload` schema of the configured Neon database.
+The current schema has already been pushed during development. For future
+production schema changes, create and test Payload migrations against a clean
+migration-managed database before changing the Vercel build command.
