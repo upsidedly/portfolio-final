@@ -1,9 +1,20 @@
 import config from "@payload-config";
+import type { Metadata } from "next";
 import { getPayload } from "payload";
 import Link from "next/link";
 
 import { PortfolioFooter } from "~/app/_components/portfolio-footer";
 import { PortfolioHeader } from "~/app/_components/portfolio-shell";
+import { createPageMetadata } from "~/seo";
+
+const MUSINGS_DESCRIPTION =
+  "Observations, thoughts, essays, and notes on any topic that I think might be of interest";
+
+export const metadata: Metadata = createPageMetadata({
+  description: MUSINGS_DESCRIPTION,
+  path: "/blog",
+  title: "Musings | Matthew Williams",
+});
 
 function formatDate(value?: null | string) {
   if (!value) return "Unpublished";
@@ -32,10 +43,7 @@ export default async function BlogIndexPage() {
       <PortfolioHeader name={settings.name} />
       <header className="index-intro">
         <h1>Things on my mind</h1>
-        <p>
-          Observations, thoughts, essays, and notes on any topic that I think
-          might be of interest
-        </p>
+        <p>{MUSINGS_DESCRIPTION}</p>
       </header>
       <section
         className={

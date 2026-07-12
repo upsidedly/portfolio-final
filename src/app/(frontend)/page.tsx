@@ -1,4 +1,5 @@
 import config from "@payload-config";
+import type { Metadata } from "next";
 import { getPayload } from "payload";
 import Link from "next/link";
 
@@ -6,8 +7,20 @@ import { AdminTools } from "~/app/_components/admin-tools";
 import { PortfolioFooter } from "~/app/_components/portfolio-footer";
 import { PortfolioHeader } from "~/app/_components/portfolio-shell";
 import { env } from "~/env";
+import { createPageMetadata } from "~/seo";
 import { getSession } from "~/server/better-auth/server";
-import { DEFAULT_CONTACT_EMAIL, DEFAULT_SOCIAL_LINKS } from "~/site-constants";
+import {
+  DEFAULT_CONTACT_EMAIL,
+  DEFAULT_SOCIAL_LINKS,
+  SITE_DESCRIPTION,
+  SITE_NAME,
+} from "~/site-constants";
+
+export const metadata: Metadata = createPageMetadata({
+  description: SITE_DESCRIPTION,
+  path: "/",
+  title: SITE_NAME,
+});
 
 function formatDate(value?: null | string) {
   if (!value) return "Unpublished";

@@ -1,13 +1,16 @@
 import config from "@payload-config";
 import { RichText } from "@payloadcms/richtext-lexical/react";
+import type { Metadata } from "next";
 import { getPayload } from "payload";
 import { draftMode } from "next/headers";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { cache } from "react";
 
 import { PortfolioFooter } from "~/app/_components/portfolio-footer";
 import { PortfolioHeader } from "~/app/_components/portfolio-shell";
 import { env } from "~/env";
+import { createPageMetadata } from "~/seo";
 import { getSession } from "~/server/better-auth/server";
 
 type BlogPostPageProps = {
@@ -24,6 +27,68 @@ function formatDate(value?: null | string) {
   }).format(new Date(value));
 }
 
+const getPublishedPostBySlug = cache(async (slug: string) => {
+  const payload = await getPayload({ config });
+  const result = await payload.find({
+    collection: "posts",
+    depth: 1,
+    limit: 1,
+    where: {
+      and: [{ slug: { equals: slug } }, { _status: { equals: "published" } }],
+    },
+  });
+
+  return result.docs[0] ?? null;
+});
+
+async function getPreviewPostBySlug(slug: string) {
+  const payload = await getPayload({ config });
+  const result = await payload.find({
+    collection: "posts",
+    depth: 1,
+    draft: true,
+    limit: 1,
+    overrideAccess: true,
+    where: { slug: { equals: slug } },
+  });
+
+  return result.docs[0] ?? null;
+}
+
+export async function generateMetadata({
+  params,
+}: BlogPostPageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const post = await getPublishedPostBySlug(slug);
+
+  if (!post) {
+    return {
+      title: "Musing not found",
+      robots: {
+        follow: false,
+        index: false,
+      },
+    };
+  }
+
+  const featuredImage =
+    post.featuredImage && typeof post.featuredImage === "object"
+      ? post.featuredImage
+      : null;
+
+  return createPageMetadata({
+    description: post.excerpt,
+    image:
+      featuredImage?.url && featuredImage.alt
+        ? { alt: featuredImage.alt, url: featuredImage.url }
+        : null,
+    path: `/blog/${post.slug}`,
+    publishedTime: post.publishedAt,
+    title: post.title,
+    type: "article",
+  });
+}
+
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const { slug } = await params;
   const { isEnabled: isDraftMode } = await draftMode();
@@ -33,18 +98,10 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     session?.user.email.toLowerCase() === env.PAYLOAD_ADMIN_EMAIL.toLowerCase();
 
   const payload = await getPayload({ config });
-  const [settings, result] = await Promise.all([
+  const [settings, post] = await Promise.all([
     payload.findGlobal({ slug: "site-settings" }),
-    payload.find({
-      collection: "posts",
-      depth: 1,
-      draft: canPreview,
-      limit: 1,
-      overrideAccess: canPreview,
-      where: { slug: { equals: slug } },
-    }),
+    canPreview ? getPreviewPostBySlug(slug) : getPublishedPostBySlug(slug),
   ]);
-  const post = result.docs[0];
 
   if (!post) notFound();
 

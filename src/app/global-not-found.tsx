@@ -11,6 +11,7 @@ export const metadata: Metadata = {
 
 const ibmPlexSans = IBM_Plex_Sans({
   subsets: ["latin"],
+  style: ["normal", "italic"],
   variable: "--font-ibm-plex-sans",
   weight: "variable",
 });

@@ -1,29 +1,65 @@
 import config from "@payload-config";
 import { RichText } from "@payloadcms/richtext-lexical/react";
+import type { Metadata } from "next";
 import { getPayload } from "payload";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { cache } from "react";
 
 import { PortfolioFooter } from "~/app/_components/portfolio-footer";
 import { PortfolioHeader } from "~/app/_components/portfolio-shell";
+import { createPageMetadata } from "~/seo";
 
 type ProjectPageProps = {
   params: Promise<{ slug: string }>;
 };
 
+const getProjectBySlug = cache(async (slug: string) => {
+  const payload = await getPayload({ config });
+  const result = await payload.find({
+    collection: "projects",
+    depth: 1,
+    limit: 1,
+    where: { slug: { equals: slug } },
+  });
+
+  return result.docs[0] ?? null;
+});
+
+export async function generateMetadata({
+  params,
+}: ProjectPageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const project = await getProjectBySlug(slug);
+
+  if (!project) {
+    return {
+      title: "Project not found",
+      robots: {
+        follow: false,
+        index: false,
+      },
+    };
+  }
+
+  const image =
+    project.image && typeof project.image === "object" ? project.image : null;
+
+  return createPageMetadata({
+    description: project.summary,
+    image: image?.url && image.alt ? { alt: image.alt, url: image.url } : null,
+    path: `/projects/${project.slug}`,
+    title: `${project.title} | Matthew Williams`,
+  });
+}
+
 export default async function ProjectPage({ params }: ProjectPageProps) {
   const { slug } = await params;
   const payload = await getPayload({ config });
-  const [settings, result] = await Promise.all([
+  const [settings, project] = await Promise.all([
     payload.findGlobal({ slug: "site-settings" }),
-    payload.find({
-      collection: "projects",
-      depth: 1,
-      limit: 1,
-      where: { slug: { equals: slug } },
-    }),
+    getProjectBySlug(slug),
   ]);
-  const project = result.docs[0];
 
   if (!project) notFound();
 

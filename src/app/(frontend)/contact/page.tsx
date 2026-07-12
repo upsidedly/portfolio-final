@@ -1,10 +1,18 @@
 import config from "@payload-config";
+import type { Metadata } from "next";
 import { getPayload } from "payload";
 
 import { ContactForm } from "~/app/_components/contact-form";
 import { PortfolioFooter } from "~/app/_components/portfolio-footer";
 import { PortfolioHeader } from "~/app/_components/portfolio-shell";
+import { createPageMetadata } from "~/seo";
 import { DEFAULT_CONTACT_EMAIL, DEFAULT_SOCIAL_LINKS } from "~/site-constants";
+
+export const metadata: Metadata = createPageMetadata({
+  description: "Send Matthew Williams a message or find him elsewhere online.",
+  path: "/contact",
+  title: "Contact | Matthew Williams",
+});
 
 export default async function ContactPage() {
   const payload = await getPayload({ config });

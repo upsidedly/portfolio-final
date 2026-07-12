@@ -4,18 +4,26 @@ import { type Metadata } from "next";
 import { IBM_Plex_Sans } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 
+import { SITE_ORIGIN } from "~/seo";
+import { SITE_DESCRIPTION, SITE_NAME } from "~/site-constants";
+
 export const metadata: Metadata = {
-  title: "Matthew | Engineer and computer scientist",
-  description:
-    "The portfolio and musings of Matthew Williams, working across AI/ML, software, robotics, and systems engineering.",
+  metadataBase: SITE_ORIGIN,
+  title: SITE_NAME,
+  description: SITE_DESCRIPTION,
   icons: {
     apple: [{ url: "/avatar-rounded.png", type: "image/png" }],
     icon: [{ url: "/avatar-rounded.png", type: "image/png" }],
+  },
+  robots: {
+    follow: true,
+    index: true,
   },
 };
 
 const ibmPlexSans = IBM_Plex_Sans({
   subsets: ["latin"],
+  style: ["normal", "italic"],
   variable: "--font-ibm-plex-sans",
   weight: "variable",
 });
