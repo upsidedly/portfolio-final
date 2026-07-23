@@ -28,7 +28,7 @@ export default async function ContactPage() {
       <article className="contact-page">
         <header className="contact-page-header">
           <p className="section-label">Contact</p>
-          <h1>Send me a message.</h1>
+          <h1>Send me a message</h1>
           <p>
             This goes to my private inbox. You can also email me directly at{" "}
             <a href={`mailto:${email}`}>{email}</a>.
