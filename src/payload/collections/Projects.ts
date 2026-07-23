@@ -1,7 +1,24 @@
 import { lexicalEditor } from "@payloadcms/richtext-lexical";
-import { type CollectionConfig, slugField } from "payload";
+import {
+  type CollectionConfig,
+  slugField,
+  type UploadFieldSingleValidation,
+} from "payload";
 
 import { isAdmin } from "~/payload/access/isAdmin";
+
+const validateFeaturedImage: UploadFieldSingleValidation = (
+  value,
+  { siblingData },
+) => {
+  const project = siblingData as { featured?: boolean };
+
+  if (project.featured && !value) {
+    return "Add an image before featuring this project.";
+  }
+
+  return true;
+};
 
 export const Projects: CollectionConfig = {
   slug: "projects",
@@ -48,6 +65,11 @@ export const Projects: CollectionConfig = {
               name: "image",
               type: "upload",
               relationTo: "media",
+              admin: {
+                description:
+                  "Required for featured projects. Optional for other projects.",
+              },
+              validate: validateFeaturedImage,
             },
           ],
         },
@@ -97,7 +119,8 @@ export const Projects: CollectionConfig = {
       type: "checkbox",
       defaultValue: true,
       admin: {
-        description: "Show this project on the home page.",
+        description:
+          "Show this project in the Featured Projects gallery. An image is required.",
         position: "sidebar",
       },
     },

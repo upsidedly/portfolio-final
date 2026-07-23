@@ -150,6 +150,9 @@ export interface Project {
     };
     [k: string]: unknown;
   } | null;
+  /**
+   * Required for featured projects. Optional for other projects.
+   */
   image?: (number | null) | Media;
   role: string;
   year?: string | null;
@@ -167,7 +170,7 @@ export interface Project {
   generateSlug?: boolean | null;
   slug: string;
   /**
-   * Show this project on the home page.
+   * Show this project in the Featured Projects gallery. An image is required.
    */
   featured?: boolean | null;
   /**

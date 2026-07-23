@@ -38,9 +38,8 @@ export default async function Home() {
     payload.findGlobal({ slug: "site-settings" }),
     payload.find({
       collection: "projects",
-      limit: 6,
+      pagination: false,
       sort: "order",
-      where: { featured: { equals: true } },
     }),
     payload.find({
       collection: "posts",
@@ -59,6 +58,8 @@ export default async function Home() {
   const socialLinks = baseSocialLinks.filter(
     (link) => link.label.toLowerCase() !== "email",
   );
+  const featuredProjects = projects.docs.filter((project) => project.featured);
+  const otherProjects = projects.docs.filter((project) => !project.featured);
 
   return (
     <main className="site-frame" id="top">
@@ -85,14 +86,21 @@ export default async function Home() {
         </div>
       </section>
 
-      <section className="work-section" id="work" aria-labelledby="work-title">
+      <section
+        className="work-section"
+        id="work"
+        aria-labelledby="featured-projects-title"
+      >
         <div className="section-heading">
-          <h2 id="work-title">Selected work</h2>
-          <span>{projects.totalDocs} projects</span>
+          <h2 id="featured-projects-title">Featured Projects</h2>
+          <span>
+            {featuredProjects.length}{" "}
+            {featuredProjects.length === 1 ? "project" : "projects"}
+          </span>
         </div>
-        {projects.docs.length ? (
+        {featuredProjects.length ? (
           <div className="project-grid">
-            {projects.docs.map((project, index) => {
+            {featuredProjects.map((project) => {
               const image =
                 project.image && typeof project.image === "object"
                   ? project.image
@@ -107,14 +115,7 @@ export default async function Home() {
                   {image?.url ? (
                     // eslint-disable-next-line @next/next/no-img-element
                     <img alt={image.alt} src={image.url} />
-                  ) : (
-                    <div
-                      className="project-card-placeholder"
-                      aria-hidden="true"
-                    >
-                      <span>{String(index + 1).padStart(2, "0")}</span>
-                    </div>
-                  )}
+                  ) : null}
                   <div className="project-card-copy">
                     <div>
                       <h3>{project.title}</h3>
@@ -129,15 +130,44 @@ export default async function Home() {
           </div>
         ) : (
           <div className="empty-work">
-            <p>Projects are being documented.</p>
+            <p>Featured projects are being documented.</p>
             {isAdmin ? (
               <Link href="/admin/collections/projects/create">
-                Add the first one
+                Add a featured project
               </Link>
             ) : null}
           </div>
         )}
       </section>
+
+      {otherProjects.length ? (
+        <section
+          className="other-projects-section"
+          aria-labelledby="other-projects-title"
+        >
+          <div className="section-heading">
+            <h2 id="other-projects-title">Other Projects</h2>
+            <span>
+              {otherProjects.length}{" "}
+              {otherProjects.length === 1 ? "project" : "projects"}
+            </span>
+          </div>
+          <div className="other-project-list">
+            {otherProjects.map((project) => (
+              <Link href={`/projects/${project.slug}`} key={project.id}>
+                <div>
+                  <h3>{project.title}</h3>
+                  <p>{project.summary}</p>
+                </div>
+                <div className="other-project-meta">
+                  <span>{project.role}</span>
+                  <span>{project.year ?? "View"}</span>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </section>
+      ) : null}
 
       <section className="writing-section" aria-labelledby="writing-title">
         <div className="section-heading">
