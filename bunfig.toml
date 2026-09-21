@@ -1,0 +1,3 @@
+[install]
+# Next 15's ESLint integration resolves its plugins and parser from the app.
+linker = "hoisted"

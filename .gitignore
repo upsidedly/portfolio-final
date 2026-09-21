@@ -44,3 +44,5 @@ yarn-error.log*
 
 # idea files
 .idea
+# Reproducible browser conversion runtime; copied before dev/build.
+/public/tool-runtime/
