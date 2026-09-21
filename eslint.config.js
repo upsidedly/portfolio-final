@@ -9,6 +9,7 @@ export default tseslint.config(
   {
     ignores: [
       ".next",
+      "next-env.d.ts",
       "generated",
       "public/tool-runtime",
       "src/app/(payload)/admin/importMap.js",

@@ -1,7 +1,10 @@
 # Private tools verification
 
 Release checks on 21 September 2026: prepared from production `main` at
-`35df342`, preserving Next.js 15.5.18 and updating the lockfile to match it.
+`35df342`. The initial 15.5.18 deployment was cancelled before promotion when
+GitHub reported critical framework advisories. The release uses Next.js 15.5.24
+and its matching lockfile, including the
+[AVIF image-optimization security fix](https://github.com/vercel/next.js/security/advisories/GHSA-2xp9-vwfh-vxw4).
 The full build, lint, types, and nine unit tests passed. The production bundle
 also passed owner/anonymous access checks, OGG (OPUS) export/playback/preferences,
 audio-to-MP4, mobile reflow, and the public-homepage smoke test. Existing live
