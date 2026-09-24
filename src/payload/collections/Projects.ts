@@ -25,11 +25,16 @@ export const Projects: CollectionConfig = {
   access: {
     create: isAdmin,
     delete: isAdmin,
-    read: () => true,
+    read: ({ req }) =>
+      req.user
+        ? true
+        : {
+            hidden: { not_equals: true },
+          },
     update: isAdmin,
   },
   admin: {
-    defaultColumns: ["title", "role", "year", "featured", "order"],
+    defaultColumns: ["title", "hidden", "role", "year", "featured", "order"],
     useAsTitle: "title",
   },
   defaultSort: "order",
@@ -114,6 +119,20 @@ export const Projects: CollectionConfig = {
       position: "sidebar",
       useAsSlug: "title",
     }),
+    {
+      name: "hidden",
+      label: "Hide from portfolio",
+      type: "checkbox",
+      defaultValue: false,
+      admin: {
+        description:
+          "Hide this project from the public portfolio without deleting it.",
+        position: "sidebar",
+        components: {
+          Cell: "~/payload/components/ProjectVisibilityCell",
+        },
+      },
+    },
     {
       name: "featured",
       type: "checkbox",

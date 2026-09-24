@@ -40,6 +40,7 @@ export default async function Home() {
       collection: "projects",
       pagination: false,
       sort: "order",
+      where: { hidden: { not_equals: true } },
     }),
     payload.find({
       collection: "posts",

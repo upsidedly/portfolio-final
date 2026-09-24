@@ -4,7 +4,7 @@ import { getPayload } from "payload";
 
 import { SITE_ORIGIN } from "~/seo";
 
-export const revalidate = 3600;
+export const dynamic = "force-dynamic";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const payload = await getPayload({ config });
@@ -21,6 +21,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     payload.find({
       collection: "projects",
       limit: 1000,
+      where: { hidden: { not_equals: true } },
       select: {
         slug: true,
         updatedAt: true,

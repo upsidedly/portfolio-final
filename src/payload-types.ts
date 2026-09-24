@@ -170,6 +170,10 @@ export interface Project {
   generateSlug?: boolean | null;
   slug: string;
   /**
+   * Hide this project from the public portfolio without deleting it.
+   */
+  hidden?: boolean | null;
+  /**
    * Show this project in the Featured Projects gallery. An image is required.
    */
   featured?: boolean | null;
@@ -409,6 +413,7 @@ export interface ProjectsSelect<T extends boolean = true> {
   repositoryURL?: T;
   generateSlug?: T;
   slug?: T;
+  hidden?: T;
   featured?: T;
   order?: T;
   updatedAt?: T;

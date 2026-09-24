@@ -14,13 +14,17 @@ type ProjectPageProps = {
   params: Promise<{ slug: string }>;
 };
 
+export const dynamic = "force-dynamic";
+
 const getProjectBySlug = cache(async (slug: string) => {
   const payload = await getPayload({ config });
   const result = await payload.find({
     collection: "projects",
     depth: 1,
     limit: 1,
-    where: { slug: { equals: slug } },
+    where: {
+      and: [{ slug: { equals: slug } }, { hidden: { not_equals: true } }],
+    },
   });
 
   return result.docs[0] ?? null;

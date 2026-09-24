@@ -2,6 +2,44 @@
   margin-bottom: 1.5rem;
 }
 
+.project-visibility-cell {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  min-width: 9rem;
+}
+
+.project-visibility-state {
+  color: var(--theme-elevation-600);
+}
+
+.project-visibility-cell button {
+  border: 0;
+  padding: 0;
+  background: none;
+  color: var(--theme-text);
+  cursor: pointer;
+  font: inherit;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.project-visibility-cell button:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
+}
+
+.project-visibility-cell button:disabled {
+  cursor: wait;
+  opacity: 0.55;
+}
+
+.project-visibility-error {
+  color: var(--theme-error-500);
+  flex-basis: 100%;
+}
+
 .google-login p {
   color: var(--theme-elevation-600);
   margin-bottom: 0.75rem;

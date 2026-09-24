@@ -101,3 +101,7 @@ The Payload tables live in the `payload` schema of the configured Neon database.
 The current schema has already been pushed during development. For future
 production schema changes, create and test Payload migrations against a clean
 migration-managed database before changing the Vercel build command.
+
+The project visibility column is added with
+`migrations/20260923_project_visibility.sql` before deploying the matching app
+code. The script keeps existing projects visible and can be rerun safely.
