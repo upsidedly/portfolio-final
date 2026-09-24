@@ -49,6 +49,20 @@ export default function ProjectVisibilityCell({
   return (
     <span className="project-visibility-cell">
       <span className="project-visibility-state">
+        <svg
+          aria-hidden="true"
+          focusable="false"
+          fill="none"
+          stroke="currentColor"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1.6"
+          viewBox="0 0 24 24"
+        >
+          <path d="M2.5 12c2.2-3.6 5.5-5.5 9.5-5.5s7.3 1.9 9.5 5.5c-2.2 3.6-5.5 5.5-9.5 5.5S4.7 15.6 2.5 12Z" />
+          <circle cx="12" cy="12" r="2.5" />
+          {hidden ? <path d="M4 20 20 4" /> : null}
+        </svg>
         {hidden ? "Hidden" : "Visible"}
       </span>
       <button
