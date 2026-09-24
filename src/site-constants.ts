@@ -1,5 +1,7 @@
 export const SITE_NAME = "Matthew Williams";
 
+export const SITE_ICON_URL = "/avatar-rounded.png?v=20260924";
+
 export const SITE_DESCRIPTION =
   "Matthew Williams works across AI/ML, software engineering, computer science, robotics engineering, and systems engineering.";
 

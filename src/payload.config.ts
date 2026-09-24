@@ -13,6 +13,7 @@ import { Posts } from "~/payload/collections/Posts";
 import { Projects } from "~/payload/collections/Projects";
 import { Users } from "~/payload/collections/Users";
 import { SiteSettings } from "~/payload/globals/SiteSettings";
+import { SITE_ICON_URL } from "~/site-constants";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -35,12 +36,12 @@ export default buildConfig({
         {
           rel: "icon",
           type: "image/png",
-          url: "/avatar-rounded.png",
+          url: SITE_ICON_URL,
         },
         {
           rel: "apple-touch-icon",
           type: "image/png",
-          url: "/avatar-rounded.png",
+          url: SITE_ICON_URL,
         },
       ],
       titleSuffix: "– Portfolio CMS",

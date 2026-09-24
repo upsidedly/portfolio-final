@@ -1,9 +1,14 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { SITE_ICON_URL } from "~/site-constants";
 import "./tools.css";
 
 export const metadata: Metadata = {
   title: { default: "Tools", template: "%s · Tools" },
+  icons: {
+    apple: [{ url: SITE_ICON_URL, type: "image/png" }],
+    icon: [{ url: SITE_ICON_URL, type: "image/png" }],
+  },
   robots: { index: false, follow: false, nocache: true },
 };
 

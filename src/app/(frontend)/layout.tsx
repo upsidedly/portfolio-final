@@ -5,15 +5,15 @@ import { IBM_Plex_Sans } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 
 import { SITE_ORIGIN } from "~/seo";
-import { SITE_DESCRIPTION, SITE_NAME } from "~/site-constants";
+import { SITE_DESCRIPTION, SITE_ICON_URL, SITE_NAME } from "~/site-constants";
 
 export const metadata: Metadata = {
   metadataBase: SITE_ORIGIN,
   title: SITE_NAME,
   description: SITE_DESCRIPTION,
   icons: {
-    apple: [{ url: "/avatar-rounded.png", type: "image/png" }],
-    icon: [{ url: "/avatar-rounded.png", type: "image/png" }],
+    apple: [{ url: SITE_ICON_URL, type: "image/png" }],
+    icon: [{ url: SITE_ICON_URL, type: "image/png" }],
   },
   robots: {
     follow: true,
