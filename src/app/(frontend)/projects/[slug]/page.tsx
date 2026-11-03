@@ -8,7 +8,7 @@ import { cache } from "react";
 
 import { PortfolioFooter } from "~/app/_components/portfolio-footer";
 import { PortfolioHeader } from "~/app/_components/portfolio-shell";
-import { createPageMetadata } from "~/seo";
+import { createPageMetadata, SITE_ORIGIN } from "~/seo";
 
 type ProjectPageProps = {
   params: Promise<{ slug: string }>;
@@ -46,12 +46,17 @@ export async function generateMetadata({
     };
   }
 
-  const image =
-    project.image && typeof project.image === "object" ? project.image : null;
-
   return createPageMetadata({
     description: project.summary,
-    image: image?.url && image.alt ? { alt: image.alt, url: image.url } : null,
+    image: {
+      alt: `${project.title} — Matthew Williams`,
+      url: new URL(
+        `/projects/${slug}/opengraph-image?v=${encodeURIComponent(project.updatedAt)}`,
+        SITE_ORIGIN,
+      ).href,
+      width: 1200,
+      height: 630,
+    },
     path: `/projects/${project.slug}`,
     title: `${project.title} | Matthew Williams`,
   });

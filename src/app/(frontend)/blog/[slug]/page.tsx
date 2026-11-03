@@ -73,17 +73,17 @@ export async function generateMetadata({
     };
   }
 
-  const featuredImage =
-    post.featuredImage && typeof post.featuredImage === "object"
-      ? post.featuredImage
-      : null;
-
   return createPageMetadata({
     description: post.excerpt,
-    image:
-      featuredImage?.url && featuredImage.alt
-        ? { alt: featuredImage.alt, url: featuredImage.url }
-        : null,
+    image: {
+      alt: `${post.title} — Matthew Williams`,
+      url: new URL(
+        `/blog/${slug}/opengraph-image?v=${encodeURIComponent(post.updatedAt)}`,
+        SITE_ORIGIN,
+      ).href,
+      width: 1200,
+      height: 630,
+    },
     path: `/blog/${post.slug}`,
     publishedTime: post.publishedAt,
     title: post.title,

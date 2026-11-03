@@ -10,6 +10,8 @@ export const SITE_ORIGIN = new URL(env.BETTER_AUTH_URL);
 type SocialImage = {
   alt: string;
   url: string;
+  width?: number;
+  height?: number;
 };
 
 type PageMetadataOptions = {
@@ -30,7 +32,7 @@ export function createPageMetadata({
   type = "website",
 }: PageMetadataOptions): Metadata {
   const url = new URL(path, SITE_ORIGIN);
-  const images = image ? [{ alt: image.alt, url: image.url }] : undefined;
+  const images = image ? [image] : undefined;
   const openGraphBase = {
     description,
     images,
@@ -61,7 +63,7 @@ export function createPageMetadata({
     twitter: {
       card: image ? "summary_large_image" : "summary",
       description,
-      images: image ? [image.url] : undefined,
+      images,
       title,
     },
   };

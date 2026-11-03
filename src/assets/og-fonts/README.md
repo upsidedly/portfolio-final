@@ -1,0 +1,1 @@
+IBM Plex Sans Regular and Medium, unchanged from [IBM/plex](https://github.com/IBM/plex/tree/71f558992315a12ca1f06a2215d57962a1992162/packages/plex-sans), commit `71f558992315a12ca1f06a2215d57962a1992162`. Used to match the portfolio typography in generated share images. The upstream SIL Open Font License is included in `LICENSE.txt`.

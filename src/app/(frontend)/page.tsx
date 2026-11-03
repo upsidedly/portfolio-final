@@ -153,7 +153,6 @@ export default async function Home() {
                   <div className="project-card-copy">
                     <div>
                       <h3>{project.title}</h3>
-                      <p>{project.role}</p>
                     </div>
                     <span>{project.year ?? "View"}</span>
                   </div>
@@ -194,7 +193,6 @@ export default async function Home() {
                   <p>{project.summary}</p>
                 </div>
                 <div className="other-project-meta">
-                  <span>{project.role}</span>
                   <span>{project.year ?? "View"}</span>
                 </div>
               </Link>
