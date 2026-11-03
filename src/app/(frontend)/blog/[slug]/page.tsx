@@ -10,7 +10,7 @@ import { cache } from "react";
 import { PortfolioFooter } from "~/app/_components/portfolio-footer";
 import { PortfolioHeader } from "~/app/_components/portfolio-shell";
 import { ShareMusing } from "~/app/_components/share-musing";
-import { env } from "~/env";
+import { isPortfolioOwner } from "~/lib/admin-identity.mjs";
 import { getWritingStats } from "~/lib/writing";
 import { createPageMetadata, SITE_ORIGIN } from "~/seo";
 import { getSession } from "~/server/better-auth/server";
@@ -95,9 +95,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const { slug } = await params;
   const { isEnabled: isDraftMode } = await draftMode();
   const session = isDraftMode ? await getSession() : null;
-  const canPreview =
-    isDraftMode &&
-    session?.user.email.toLowerCase() === env.PAYLOAD_ADMIN_EMAIL.toLowerCase();
+  const canPreview = isDraftMode && isPortfolioOwner(session);
 
   const payload = await getPayload({ config });
   const [settings, post] = await Promise.all([

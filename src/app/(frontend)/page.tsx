@@ -6,7 +6,7 @@ import Link from "next/link";
 import { AdminTools } from "~/app/_components/admin-tools";
 import { PortfolioFooter } from "~/app/_components/portfolio-footer";
 import { PortfolioHeader } from "~/app/_components/portfolio-shell";
-import { env } from "~/env";
+import { isPortfolioOwner } from "~/lib/admin-identity.mjs";
 import { createPageMetadata } from "~/seo";
 import { getSession } from "~/server/better-auth/server";
 import {
@@ -50,8 +50,7 @@ export default async function Home() {
     }),
     getSession(),
   ]);
-  const isAdmin =
-    session?.user.email.toLowerCase() === env.PAYLOAD_ADMIN_EMAIL.toLowerCase();
+  const isAdmin = isPortfolioOwner(session);
   const baseSocialLinks = settings.socialLinks?.length
     ? settings.socialLinks
     : DEFAULT_SOCIAL_LINKS;

@@ -4,15 +4,13 @@ import { draftMode } from "next/headers";
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 
-import { env } from "~/env";
+import { isPortfolioOwner } from "~/lib/admin-identity.mjs";
 import { auth } from "~/server/better-auth";
 
 export async function GET(request: NextRequest) {
   const session = await auth.api.getSession({ headers: request.headers });
 
-  if (
-    session?.user.email.toLowerCase() !== env.PAYLOAD_ADMIN_EMAIL.toLowerCase()
-  ) {
+  if (!isPortfolioOwner(session)) {
     return new Response("You are not allowed to preview this post.", {
       status: 403,
     });

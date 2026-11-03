@@ -137,3 +137,17 @@ matching Lexical 0.50.0 packages and Sharp 0.35.5. These pins address the releva
 and [Next Server Actions advisory](https://github.com/vercel/next.js/security/advisories/GHSA-p3m5-59mp-jv5r).
 Builds explicitly run ESLint (Next 16 no longer runs it during `next build`) and
 use Webpack to preserve the Payload integration's bundler configuration.
+
+Before deploying Payload 3.90 to an existing database, run:
+
+```sh
+node --env-file=.env scripts/migrate-payload-390.mjs
+```
+
+This idempotent migration adds the nullable `payload.media._objectkey` storage
+metadata column. It snapshots the prior column definitions under ignored
+`.vercel/` and verifies all existing media rows inside the same bounded-lock
+transaction. The Google-only users collection has local strategy disabled and
+does not need password-reset fields. Older deployments remain compatible with
+the added nullable field. A rollback should retain the field to preserve any new
+storage keys.
