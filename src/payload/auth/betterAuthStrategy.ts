@@ -1,6 +1,6 @@
 import type { AuthStrategyFunction } from "payload";
 
-import { env } from "~/env";
+import { isPortfolioOwner } from "~/lib/admin-identity.mjs";
 import { auth } from "~/server/better-auth";
 
 export const authenticateWithBetterAuth: AuthStrategyFunction = async ({
@@ -10,7 +10,7 @@ export const authenticateWithBetterAuth: AuthStrategyFunction = async ({
   const session = await auth.api.getSession({ headers });
   const email = session?.user.email?.trim().toLowerCase();
 
-  if (!session?.user || email !== env.PAYLOAD_ADMIN_EMAIL.toLowerCase()) {
+  if (!session?.user || !email || !isPortfolioOwner(session)) {
     return { user: null };
   }
 

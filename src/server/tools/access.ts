@@ -1,7 +1,7 @@
 import "server-only";
 
 import { redirect } from "next/navigation";
-import { env } from "~/env";
+import { isPortfolioOwner } from "~/lib/admin-identity.mjs";
 import { auth } from "~/server/better-auth";
 import { getSession } from "~/server/better-auth/server";
 
@@ -15,11 +15,7 @@ export const privateHeaders = {
 type Identity = { user: { email: string; emailVerified: boolean } } | null;
 
 export function isToolsOwner(session: Identity): boolean {
-  return Boolean(
-    session?.user.emailVerified &&
-    session.user.email.trim().toLowerCase() ===
-      env.PAYLOAD_ADMIN_EMAIL.trim().toLowerCase(),
-  );
+  return isPortfolioOwner(session);
 }
 
 export async function requireToolsOwner() {

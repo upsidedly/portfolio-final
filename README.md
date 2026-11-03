@@ -22,8 +22,8 @@ The development command uses `PORT`, then the port in `BETTER_AUTH_URL` from
 ## Private tools
 
 Open `/tools`. Every tool page checks a server-side Better Auth session and
-requires a verified email matching `PAYLOAD_ADMIN_EMAIL`. Other signed-in
-accounts are denied. The private routes have noindex/no-store headers, are
+requires a verified Google email matching `matthewlloydw@gmail.com` or
+`matthew@manta.works`. Other signed-in accounts are denied. The private routes have noindex/no-store headers, are
 excluded from the sitemap, and use a separate layout without analytics.
 
 Audio speed and file conversion run on the device using browser APIs and a
@@ -89,7 +89,29 @@ Create a Web application OAuth client in Google Cloud Console and add:
 - `http://localhost:3002/api/auth/callback/google`
 - `https://your-production-domain.com/api/auth/callback/google`
 
-Only the address in `PAYLOAD_ADMIN_EMAIL` can enter the CMS.
+Only the two verified owner addresses above can enter the CMS.
+
+## Project controls
+
+Open `/admin` → **Project controls**, or `/tools/projects`. Cork has gift-code
+creation, optional redemption messages, redemption limits and deadlines, optional
+temporary access, code reveal/disable, recent activity, and purchase settings.
+Permanent purchases and permanent gifts have no access expiry. A redemption
+deadline affects when a code can be claimed; temporary access starts at redemption.
+Disabling a code stops new redemptions and does not revoke completed activations.
+
+The public portfolio contains the authenticated interface and a scoped server
+bridge. Cork's licensing implementation and signing key stay in its private
+project. Set the server-only `CORK_ADMIN_BRIDGE_SECRET` to the same value on both
+projects. No signing key, database credential, browser cookie or Google OAuth
+secret is copied to the portfolio client. Every action checks the verified owner
+session and every mutation checks its origin. Gift-creation retries keep the same
+request ID, and purchase settings reject stale revisions.
+
+The Cork admin service accepts a signed, short-lived request from this bridge.
+Its API and database setup are documented in the private Cork project. New
+products should add a specific server adapter and controls page; do not accept
+arbitrary remote URLs or credentials from client configuration.
 
 ## Vercel
 

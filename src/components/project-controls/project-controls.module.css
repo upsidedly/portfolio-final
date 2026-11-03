@@ -1,0 +1,202 @@
+.controls {
+  overflow-wrap: anywhere;
+}
+.title,
+.sectionTitle,
+.giftHeading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+.title a,
+.giftHeading > span {
+  font-size: 13px;
+  color: var(--tool-muted);
+}
+.section {
+  padding-block: 30px;
+  border-top: 1px solid var(--tool-line);
+}
+.section h2 {
+  font-size: 24px;
+  font-weight: 550;
+}
+.create {
+  margin-top: 24px;
+}
+.create > summary {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  cursor: pointer;
+  padding: 8px 16px;
+  border: 1px solid var(--tool-line);
+  border-radius: 6px;
+  font-weight: 500;
+}
+.form {
+  margin-top: 25px;
+}
+.form fieldset {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 20px;
+  min-width: 0;
+}
+.form label,
+.search label {
+  display: grid;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 500;
+}
+.form label span {
+  font-weight: 400;
+}
+.form input,
+.form select,
+.form textarea,
+.search input,
+.codePanel input {
+  font: inherit;
+  width: 100%;
+  min-width: 0;
+  min-height: 44px;
+  padding: 10px 12px;
+  border: 1px solid #728078;
+  border-radius: 6px;
+  background: var(--tool-surface);
+  color: var(--tool-text);
+}
+.form textarea {
+  min-height: 110px;
+  resize: vertical;
+  line-height: 1.6;
+}
+.form button {
+  justify-self: start;
+}
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+.search {
+  margin-top: 36px;
+}
+.giftList {
+  list-style: none;
+  padding: 0;
+  margin: 16px 0 0;
+}
+.giftList > li {
+  padding: 25px 0;
+  border-bottom: 1px solid var(--tool-line);
+}
+.giftHeading h3 {
+  font-size: 17px;
+  font-weight: 550;
+  margin: 0;
+}
+.giftList p {
+  margin-top: 7px;
+  font-size: 14px;
+  color: var(--tool-muted);
+}
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 24px;
+  margin-top: 14px;
+}
+.actions button {
+  min-height: 44px;
+}
+.message {
+  margin-top: 12px;
+  font-size: 13px;
+}
+.message summary {
+  cursor: pointer;
+  min-height: 44px;
+}
+.message p {
+  white-space: pre-wrap;
+  color: var(--tool-text);
+  max-width: 100%;
+}
+.codePanel {
+  margin-top: 24px;
+  padding: 20px;
+  background: var(--tool-surface);
+  border: 1px solid var(--tool-line);
+  border-radius: 8px;
+}
+.codePanel h3 {
+  margin: 0 0 15px;
+  font-size: 16px;
+}
+.codePanel input {
+  font-family: ui-monospace, monospace;
+  font-size: 13px;
+  background: var(--tool-bg);
+}
+.empty {
+  padding-block: 25px;
+  color: var(--tool-muted);
+}
+.purchaseSummary {
+  cursor: pointer;
+  min-height: 44px;
+}
+.purchaseSummary h2 {
+  display: inline;
+  margin-left: 5px;
+}
+.notice {
+  min-height: 26px;
+  margin-top: 18px;
+  color: var(--tool-accent);
+  font-size: 14px;
+}
+.activity {
+  padding-block: 24px;
+  font-size: 14px;
+}
+.activity summary {
+  cursor: pointer;
+  min-height: 44px;
+}
+.activity ul {
+  list-style: none;
+  margin: 5px 0 0;
+  padding: 0;
+}
+.activity li {
+  display: grid;
+  gap: 4px;
+  padding-block: 12px;
+  border-bottom: 1px solid var(--tool-line);
+}
+@media (max-width: 480px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+  .title {
+    align-items: baseline;
+  }
+  .giftHeading {
+    align-items: baseline;
+    gap: 12px;
+  }
+  .codePanel {
+    padding: 15px;
+  }
+  .actions {
+    gap: 18px;
+  }
+}

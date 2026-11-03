@@ -18,7 +18,7 @@ export const Users: CollectionConfig = {
     ],
   },
   access: {
-    admin: ({ req }) => Boolean(req.user),
+    admin: isAdmin,
     create: () => false,
     delete: isAdmin,
     read: isAdmin,

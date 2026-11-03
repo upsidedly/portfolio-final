@@ -5,6 +5,13 @@ import { useState } from "react";
 
 const tools = [
   {
+    href: "/tools/projects",
+    title: "Project controls",
+    description: "Gifts, purchases and site settings.",
+    keywords:
+      "cork gift licence license codes purchases projects admin settings",
+  },
+  {
     href: "/tools/audio",
     title: "Audio speed",
     description: "Pitch and speed, together.",
