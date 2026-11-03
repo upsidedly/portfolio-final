@@ -127,3 +127,13 @@ migration-managed database before changing the Vercel build command.
 The project visibility column is added with
 `migrations/20260923_project_visibility.sql` before deploying the matching app
 code. The script keeps existing projects visible and can be rerun safely.
+
+### Runtime compatibility
+
+The administration runtime uses Payload 3.90.0 with supported Next.js 16.4.1,
+matching Lexical 0.50.0 packages and Sharp 0.35.5. These pins address the relevant
+[Payload SQL advisory](https://github.com/payloadcms/payload/security/advisories/GHSA-v49j-62m6-pgrr),
+[Payload authentication advisory](https://github.com/payloadcms/payload/security/advisories/GHSA-66wr-7vmr-p5jq)
+and [Next Server Actions advisory](https://github.com/vercel/next.js/security/advisories/GHSA-p3m5-59mp-jv5r).
+Builds explicitly run ESLint (Next 16 no longer runs it during `next build`) and
+use Webpack to preserve the Payload integration's bundler configuration.
