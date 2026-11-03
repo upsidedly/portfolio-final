@@ -1,4 +1,7 @@
-import { lexicalEditor } from "@payloadcms/richtext-lexical";
+import {
+  createServerFeature,
+  lexicalEditor,
+} from "@payloadcms/richtext-lexical";
 import { type CollectionConfig, type FieldHook, slugField } from "payload";
 
 import { isAdmin } from "~/payload/access/isAdmin";
@@ -10,6 +13,14 @@ const setPublishedAt: FieldHook = ({ siblingData, value }) => {
 
   return typeof value === "string" ? value : null;
 };
+
+const WritingToolbarFeature = createServerFeature({
+  key: "writingToolbar",
+  feature: {
+    ClientFeature:
+      "~/payload/components/WritingToolbar#WritingToolbarFeatureClient",
+  },
+});
 
 export const Posts: CollectionConfig = {
   slug: "posts",
@@ -42,6 +53,15 @@ export const Posts: CollectionConfig = {
   defaultSort: "-publishedAt",
   fields: [
     {
+      name: "title",
+      type: "text",
+      required: true,
+      admin: {
+        className: "post-title-field",
+        placeholder: "Title",
+      },
+    },
+    {
       type: "tabs",
       tabs: [
         {
@@ -52,13 +72,21 @@ export const Posts: CollectionConfig = {
               type: "richText",
               required: true,
               editor: lexicalEditor({
+                features: ({ defaultFeatures }) => [
+                  ...defaultFeatures,
+                  WritingToolbarFeature(),
+                ],
                 admin: {
                   hideGutter: true,
                   hideInsertParagraphAtEnd: true,
+                  placeholder: "Start writing…",
                 },
               }),
               admin: {
                 className: "post-content-editor",
+                components: {
+                  afterInput: ["~/payload/components/WritingStats"],
+                },
               },
             },
           ],
@@ -69,15 +97,14 @@ export const Posts: CollectionConfig = {
             "Add the summary and image used on blog listing and sharing surfaces.",
           fields: [
             {
-              name: "title",
-              type: "text",
-              required: true,
-            },
-            {
               name: "excerpt",
               type: "textarea",
               required: true,
               maxLength: 320,
+              admin: {
+                description:
+                  "A short introduction shown in the musings list and link previews.",
+              },
             },
             {
               name: "featuredImage",

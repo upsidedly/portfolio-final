@@ -87,6 +87,39 @@ export default async function Home() {
         </div>
       </section>
 
+      <section className="writing-section" aria-labelledby="writing-title">
+        <div className="section-heading">
+          <h2 id="writing-title">Recent musings</h2>
+          <Link href="/blog">All musings</Link>
+        </div>
+        <div
+          className={
+            posts.docs.length
+              ? "writing-list"
+              : "writing-list writing-list--empty"
+          }
+        >
+          {posts.docs.length ? (
+            posts.docs.map((post) => (
+              <Link href={`/blog/${post.slug}`} key={post.id}>
+                <div>
+                  <h3>{post.title}</h3>
+                  <p>{post.excerpt}</p>
+                </div>
+                <time dateTime={post.publishedAt ?? undefined}>
+                  {formatDate(post.publishedAt)}
+                </time>
+              </Link>
+            ))
+          ) : (
+            <p className="writing-empty">
+              Thoughts, observations, and analyses I hope you find interesting.
+              Check back soon.
+            </p>
+          )}
+        </div>
+      </section>
+
       <section
         className="work-section"
         id="work"
@@ -169,39 +202,6 @@ export default async function Home() {
           </div>
         </section>
       ) : null}
-
-      <section className="writing-section" aria-labelledby="writing-title">
-        <div className="section-heading">
-          <h2 id="writing-title">Recent musings</h2>
-          <Link href="/blog">All musings</Link>
-        </div>
-        <div
-          className={
-            posts.docs.length
-              ? "writing-list"
-              : "writing-list writing-list--empty"
-          }
-        >
-          {posts.docs.length ? (
-            posts.docs.map((post) => (
-              <Link href={`/blog/${post.slug}`} key={post.id}>
-                <div>
-                  <h3>{post.title}</h3>
-                  <p>{post.excerpt}</p>
-                </div>
-                <time dateTime={post.publishedAt ?? undefined}>
-                  {formatDate(post.publishedAt)}
-                </time>
-              </Link>
-            ))
-          ) : (
-            <p className="writing-empty">
-              Thoughts, observations, and analyses I hope you find interesting.
-              Check back soon.
-            </p>
-          )}
-        </div>
-      </section>
 
       <section
         className="portfolio-grid contact-grid"

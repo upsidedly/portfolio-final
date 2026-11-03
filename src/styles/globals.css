@@ -215,7 +215,7 @@ a:hover {
   position: relative;
   display: flex;
   grid-column: span 6;
-  min-height: 250px;
+  min-height: 0;
   flex-direction: column;
   border-right: 1px solid var(--line);
   border-bottom: 1px solid var(--line);
@@ -223,7 +223,7 @@ a:hover {
 }
 
 .project-card img {
-  height: 180px;
+  height: 112px;
   width: 100%;
   min-height: 0;
   flex: none;
@@ -244,8 +244,8 @@ a:hover {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  gap: 24px;
-  padding: 16px 18px 7px;
+  gap: 12px;
+  padding: 12px 14px 6px;
 }
 
 .project-card h3 {
@@ -265,7 +265,7 @@ a:hover {
 .project-summary {
   max-width: 46ch;
   margin: 0;
-  padding: 0 18px 17px;
+  padding: 0 14px 13px;
   color: var(--muted);
   font-size: 0.86rem;
   line-height: 1.5;
@@ -645,11 +645,75 @@ a:hover {
   line-height: 1.55;
 }
 
-.article-header time {
-  display: block;
+.article-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 18px;
   margin-top: 24px;
-  color: var(--faint);
+  color: var(--muted);
   font-size: 0.82rem;
+}
+
+.article-footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 12px 24px;
+  width: min(100%, 600px);
+  margin: 48px 0 0 8%;
+  border-top: 1px solid var(--line);
+  padding-top: 18px;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.article-footer > a:last-child {
+  margin-left: auto;
+}
+
+.musing-share {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 8px 12px;
+  min-width: 0;
+}
+
+.musing-share button {
+  border: 0;
+  background: none;
+  padding: 0;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--accent) 58%, transparent);
+  text-underline-offset: 0.2em;
+}
+
+.musing-share button:hover {
+  color: var(--accent);
+}
+
+.musing-share button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+}
+
+.musing-share label {
+  display: grid;
+  flex-basis: 100%;
+  gap: 4px;
+}
+
+.musing-share input {
+  min-width: 0;
+  width: 100%;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  padding: 8px;
+  color: var(--text);
+  font: inherit;
 }
 
 .article-figure {
@@ -1073,8 +1137,8 @@ a:hover {
   }
 
   .project-card img {
-    height: 170px;
-    min-height: 170px;
+    height: 112px;
+    min-height: 0;
   }
 
   .other-project-list > a {
@@ -1104,6 +1168,7 @@ a:hover {
 
   .article-header,
   .article-prose,
+  .article-footer,
   .project-lede,
   .project-links {
     width: 100%;

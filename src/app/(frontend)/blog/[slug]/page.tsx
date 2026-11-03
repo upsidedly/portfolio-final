@@ -9,8 +9,10 @@ import { cache } from "react";
 
 import { PortfolioFooter } from "~/app/_components/portfolio-footer";
 import { PortfolioHeader } from "~/app/_components/portfolio-shell";
+import { ShareMusing } from "~/app/_components/share-musing";
 import { env } from "~/env";
-import { createPageMetadata } from "~/seo";
+import { getWritingStats } from "~/lib/writing";
+import { createPageMetadata, SITE_ORIGIN } from "~/seo";
 import { getSession } from "~/server/better-auth/server";
 
 type BlogPostPageProps = {
@@ -110,6 +112,9 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
       ? post.featuredImage
       : null;
 
+  const { minutes } = getWritingStats(post.content);
+  const articleURL = new URL(`/blog/${post.slug}`, SITE_ORIGIN).href;
+
   return (
     <main className="site-frame article-shell" id="top">
       {canPreview ? (
@@ -126,11 +131,15 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           <Link href="/blog">Musings</Link>
           <h1>{post.title}</h1>
           <p>{post.excerpt}</p>
-          {post.publishedAt ? (
-            <time dateTime={post.publishedAt}>
-              {formatDate(post.publishedAt)}
-            </time>
-          ) : null}
+          <div className="article-meta">
+            <span>By {settings.name}</span>
+            {post.publishedAt ? (
+              <time dateTime={post.publishedAt}>
+                {formatDate(post.publishedAt)}
+              </time>
+            ) : null}
+            {minutes ? <span>{minutes} min read</span> : null}
+          </div>
         </header>
         {featuredImage?.url ? (
           <figure className="article-figure">
@@ -146,6 +155,13 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             <p>Start writing to preview the article.</p>
           )}
         </div>
+        <nav className="article-footer" aria-label="Musing actions">
+          <Link href="/blog">All musings</Link>
+          {!canPreview ? (
+            <ShareMusing title={post.title} url={articleURL} />
+          ) : null}
+          <a href="#top">Back to top</a>
+        </nav>
       </article>
       <PortfolioFooter name={settings.name} />
     </main>
