@@ -8,6 +8,8 @@ import { PortfolioHeader } from "~/app/_components/portfolio-shell";
 import { createPageMetadata } from "~/seo";
 import { SITE_NAME } from "~/site-constants";
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = createPageMetadata({
   description: "More projects by Matthew Williams.",
   path: "/projects",
