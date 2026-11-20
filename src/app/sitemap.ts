@@ -41,6 +41,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       url: new URL("/blog", SITE_ORIGIN).toString(),
     },
     {
+      changeFrequency: "monthly",
+      priority: 0.7,
+      url: new URL("/projects", SITE_ORIGIN).toString(),
+    },
+    {
       changeFrequency: "yearly",
       priority: 0.4,
       url: new URL("/contact", SITE_ORIGIN).toString(),

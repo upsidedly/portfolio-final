@@ -124,7 +124,9 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
               View source ↗
             </a>
           ) : null}
-          <Link href="/#work">Back to work</Link>
+          <Link href={project.featured ? "/#work" : "/projects"}>
+            Back to work
+          </Link>
         </div>
       </article>
       <PortfolioFooter name={settings.name} />

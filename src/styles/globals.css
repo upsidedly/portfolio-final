@@ -25,6 +25,7 @@ html {
   background: var(--canvas);
   color-scheme: dark;
   scroll-behavior: smooth;
+  scrollbar-gutter: stable;
 }
 
 body {
@@ -99,6 +100,7 @@ a:hover {
 }
 
 .site-nav a,
+.hero-links a,
 .section-heading a,
 .site-footer a,
 .article-header > a,
@@ -129,8 +131,20 @@ a:hover {
 
 .hero-identity {
   display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px 24px;
+}
+
+.hero-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.9rem;
 }
 
 .hero-identity h1 {
@@ -179,7 +193,6 @@ a:hover {
 }
 
 .work-section,
-.other-projects-section,
 .writing-section {
   margin-top: 48px;
 }
@@ -235,6 +248,16 @@ a:hover {
     opacity 220ms ease;
 }
 
+@media (width > 760px) {
+  .project-card:first-child:nth-last-child(odd) {
+    grid-column: 1 / -1;
+  }
+
+  .project-card:first-child:nth-last-child(odd) img {
+    height: 224px;
+  }
+}
+
 .project-card:hover img {
   filter: saturate(0.8);
   opacity: 0.82;
@@ -285,7 +308,7 @@ a:hover {
   text-decoration: none;
 }
 
-.other-project-list h3 {
+.other-project-list h2 {
   margin: 0;
   font-size: 1rem;
   font-weight: 500;
@@ -527,6 +550,10 @@ a:hover {
 /* Writing index */
 .index-intro {
   margin-bottom: 56px;
+}
+
+.project-index-intro {
+  margin-bottom: 24px;
 }
 
 .index-intro h1 {
