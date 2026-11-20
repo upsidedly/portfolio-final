@@ -454,10 +454,19 @@ a:hover {
 .site-footer {
   display: flex;
   justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 4px 16px;
   margin-top: 24px;
   padding: 15px 4px 0;
   color: var(--muted);
   font-size: 0.85rem;
+}
+
+.site-footer-credit {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 4px 14px;
 }
 
 /* Not found */
@@ -613,6 +622,18 @@ a:hover {
 
 .site-footer a {
   text-decoration: none;
+}
+
+.site-footer .site-footer-credit a {
+  color: var(--muted);
+  text-decoration: underline;
+  text-decoration-color: var(--line);
+  text-underline-offset: 3px;
+}
+
+.site-footer .site-footer-credit a:is(:hover, :focus-visible) {
+  color: var(--text);
+  text-decoration-color: currentColor;
 }
 
 .post-index--empty {

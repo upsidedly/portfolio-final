@@ -112,88 +112,281 @@
   object-fit: cover;
 }
 
-.post-content-editor .field-label {
-  display: none;
+.collection-edit--posts {
+  --musing-quiet: var(--theme-elevation-650);
+  --musing-rule: var(--theme-elevation-150);
+  --musing-serif: Charter, "Bitstream Charter", Georgia, serif;
+
+  .document-fields__edit {
+    padding-block: clamp(1.25rem, 4vw, 3rem) 4rem;
+  }
+
+  .document-fields__fields {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: start;
+    max-width: 47rem;
+    min-width: 0;
+    margin-inline: auto;
+  }
+
+  .musing-title,
+  .musing-content {
+    grid-column: 1 / -1;
+    min-width: 0;
+  }
+
+  .musing-title {
+    margin: 1.7rem 0 0.95rem;
+
+    input {
+      width: 100%;
+      height: auto;
+      padding: 0.18em 0;
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+      box-shadow: none;
+      color: var(--theme-text);
+      font: 600 clamp(2rem, 4vw, 3.25rem) / 1.13 var(--musing-serif);
+      letter-spacing: -0.035em;
+    }
+
+    input::placeholder {
+      color: var(--musing-quiet);
+      font: inherit;
+      opacity: 1;
+    }
+
+    input:focus-visible {
+      box-shadow: 0 1px var(--musing-quiet);
+    }
+  }
+
+  .musing-title .field-label,
+  .musing-content .rich-text-lexical__label-row {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  .musing-title.error .field-label,
+  .musing-content.error .rich-text-lexical__label-row {
+    position: static;
+    width: auto;
+    height: auto;
+    overflow: visible;
+    clip-path: none;
+  }
+
+  .musing-content {
+    margin: 0;
+
+    .rich-text-lexical__wrap {
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+      box-shadow: none;
+    }
+
+    .editor-container {
+      font-family: var(--musing-serif);
+      font-size: clamp(1.25rem, 1.45vw, 1.5rem);
+      line-height: 1.7;
+    }
+
+    :is(
+      .LexicalEditorTheme__paragraph,
+      .LexicalEditorTheme__listItem,
+      .LexicalEditorTheme__quote
+    ) {
+      font-size: inherit;
+      line-height: inherit;
+    }
+
+    :is(h1, h2, h3, h4, h5, h6) {
+      font-family: var(--musing-serif);
+    }
+
+    .rich-text-lexical__wrap .editor-container .ContentEditable__root {
+      min-height: clamp(24rem, 54vh, 42rem);
+      padding: 0.3rem 0 2rem;
+      overflow-wrap: anywhere;
+    }
+
+    .rich-text-lexical__wrap .editor-container .LexicalEditorTheme__placeholder {
+      inset-block-start: 0.3rem;
+      inset-inline-start: 0;
+      padding: 0;
+      color: var(--musing-quiet);
+      font-size: inherit;
+      line-height: inherit;
+    }
+  }
 }
 
-.post-content-editor {
-  max-width: 72ch;
-  margin: 0.5rem auto 0;
-}
-
-.post-title-field {
-  max-width: 72ch;
-  margin-inline: auto;
-}
-
-.post-title-field input {
-  font-size: 1.65rem;
-  font-weight: 500;
-  line-height: 1.3;
-}
-
-.writing-stats {
+.musing-word-count,
+.musing-settings > summary,
+.musing-settings-close {
   margin: 0;
-  padding-top: 0.75rem;
-  color: var(--theme-elevation-600);
   font-size: 0.85rem;
 }
 
-.writing-toolbar {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.25rem 0.75rem;
-  margin-bottom: 1rem;
-  border-bottom: 1px solid var(--theme-elevation-150);
-  padding-bottom: 0.75rem;
+.musing-word-count {
+  grid-column: 1;
+  grid-row: 1;
+  align-self: start;
+  padding-block: 0.9rem;
+  color: var(--musing-quiet);
+  font-variant-numeric: tabular-nums;
+  pointer-events: none;
 }
 
-.writing-toolbar button {
-  min-height: 2.75rem;
+.musing-settings {
+  grid-column: 1 / -1;
+  grid-row: 1;
+  min-width: 0;
+
+  &[open] {
+    padding-bottom: 0.8rem;
+    border-bottom: 1px solid var(--musing-rule);
+  }
+
+  > summary {
+    width: fit-content;
+    margin-inline-start: auto;
+    padding: 0.9rem 0;
+    cursor: pointer;
+    list-style-position: inside;
+    color: var(--musing-quiet);
+
+    &:hover {
+      color: var(--theme-text);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+  }
+}
+
+.musing-settings-close {
+  display: block;
+  margin-inline-start: auto;
+  padding: 0.6rem 0;
   border: 0;
-  border-radius: 0.25rem;
-  background: none;
-  padding: 0.25rem 0.5rem;
+  background: transparent;
   color: var(--theme-text);
   cursor: pointer;
-  font: inherit;
+
+  &:hover {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
 }
 
-.writing-toolbar button:hover,
-.writing-toolbar button[aria-pressed="true"] {
-  background: var(--theme-elevation-150);
+.musing-settings-fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem 1.25rem;
+  min-width: 0;
+  margin-block: 0.35rem 0.6rem;
+
+  > .field-type {
+    min-width: 0;
+    margin: 0;
+  }
+
+  > :is(.textarea, .upload) {
+    grid-column: 1 / -1;
+  }
+
+  .upload__dropzoneContent__buttons {
+    flex-wrap: wrap;
+    left: auto;
+  }
 }
 
-.writing-toolbar button:focus-visible {
-  outline: 2px solid var(--theme-text);
+.template-default:has(.collection-edit--posts .musing-content) {
+  .doc-header__header {
+    justify-content: flex-end;
+  }
+
+  .doc-header__title {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+
+  .collection-edit--posts .doc-controls__value-wrap:last-child {
+    display: none;
+  }
+}
+
+.musing-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.2rem;
+  margin-block: 0 0.85rem;
+
+  button {
+    min-height: 2.25rem;
+    padding-inline: 0.85rem;
+    border: 0;
+    border-radius: 0.4rem;
+    background: transparent;
+    color: var(--theme-elevation-650);
+    cursor: pointer;
+    font: inherit;
+
+    &:hover {
+      background: var(--theme-elevation-50);
+    }
+
+    &[aria-pressed="true"] {
+      background: var(--theme-elevation-150);
+      color: var(--theme-text);
+      font-weight: 600;
+    }
+  }
+}
+
+.collection-list--posts .cell-title a {
+  font-weight: 600;
+  overflow-wrap: anywhere;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+:is(.musing-settings > summary, .musing-settings-close, .musing-filters button):focus-visible {
+  outline: 2px solid var(--theme-elevation-700);
   outline-offset: 2px;
 }
 
-.writing-toolbar button:disabled {
-  cursor: default;
-  opacity: 0.55;
-}
+@media (max-width: 45rem) {
+  .musing-settings-fields {
+    grid-template-columns: minmax(0, 1fr);
+  }
 
-.writing-toolbar > span {
-  color: var(--theme-elevation-600);
-  font-size: 0.85rem;
-}
+  .template-default:has(.collection-edit--posts) {
+    .app-header__wrapper,
+    .app-header__step-nav-wrapper,
+    .step-nav,
+    .step-nav__last {
+      min-width: 0;
+    }
 
-.post-content-editor .rich-text-lexical__wrap {
-  border: 0;
-  background: transparent;
-  box-shadow: none;
-}
+    .step-nav > :not(.step-nav__last) {
+      flex-shrink: 0;
+    }
+  }
 
-.post-content-editor .editor-container {
-  font-size: 1.08rem;
-  line-height: 1.75;
-}
-
-.post-content-editor [contenteditable="true"] {
-  min-height: clamp(28rem, 58vh, 46rem);
-  padding: 1rem 0 4rem;
+  .collection-edit--posts .doc-controls__value-wrap {
+    display: none;
+  }
 }
 
 .dashboard-home-link {

@@ -225,7 +225,7 @@ export default async function Home() {
         ) : null}
       </section>
 
-      <PortfolioFooter name={settings.name} />
+      <PortfolioFooter name={settings.name} showSignIn />
       {isAdmin ? <AdminTools /> : null}
     </main>
   );

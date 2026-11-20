@@ -14,11 +14,11 @@ const setPublishedAt: FieldHook = ({ siblingData, value }) => {
   return typeof value === "string" ? value : null;
 };
 
-const WritingToolbarFeature = createServerFeature({
-  key: "writingToolbar",
+const MusingCanvasFeature = createServerFeature({
+  key: "musingCanvas",
   feature: {
     ClientFeature:
-      "~/payload/components/WritingToolbar#WritingToolbarFeatureClient",
+      "~/payload/components/Musings/Canvas#MusingCanvasFeatureClient",
   },
 });
 
@@ -43,93 +43,98 @@ export const Posts: CollectionConfig = {
     update: isAdmin,
   },
   admin: {
-    defaultColumns: ["title", "slug", "_status", "publishedAt"],
+    components: {
+      beforeListTable: ["~/payload/components/Musings/List#MusingFilters"],
+    },
+    defaultColumns: ["title", "_status", "updatedAt"],
+    listSearchableFields: ["title", "excerpt"],
     preview: (doc) =>
       typeof doc.slug === "string"
         ? `/preview?slug=${encodeURIComponent(doc.slug)}`
         : null,
     useAsTitle: "title",
   },
-  defaultSort: "-publishedAt",
+  defaultSort: "-updatedAt",
   fields: [
+    {
+      name: "writingStats",
+      type: "ui",
+      admin: {
+        components: {
+          Field: "~/payload/components/WritingStats",
+        },
+      },
+    },
+    {
+      type: "collapsible",
+      label: "Post settings",
+      admin: {
+        components: {
+          Field: "~/payload/components/Musings/Editor#PostSettings",
+        },
+      },
+      fields: [
+        {
+          name: "excerpt",
+          type: "textarea",
+          required: true,
+          maxLength: 320,
+          admin: {
+            description:
+              "Required to publish. Shown in listings and link previews.",
+          },
+        },
+        {
+          name: "featuredImage",
+          type: "upload",
+          relationTo: "media",
+        },
+        slugField({ position: "main", useAsSlug: "title" }),
+        {
+          name: "publishedAt",
+          label: "Publication date",
+          type: "date",
+          admin: {
+            date: {
+              pickerAppearance: "dayAndTime",
+            },
+            description: "Leave empty to use the publish date.",
+          },
+          hooks: {
+            beforeChange: [setPublishedAt],
+          },
+        },
+      ],
+    },
     {
       name: "title",
       type: "text",
       required: true,
       admin: {
-        className: "post-title-field",
+        className: "musing-title",
         placeholder: "Title",
+        components: {
+          Cell: "~/payload/components/Musings/List#MusingTitleCell",
+        },
       },
     },
     {
-      type: "tabs",
-      tabs: [
-        {
-          label: "Write",
-          fields: [
-            {
-              name: "content",
-              type: "richText",
-              required: true,
-              editor: lexicalEditor({
-                features: ({ defaultFeatures }) => [
-                  ...defaultFeatures,
-                  WritingToolbarFeature(),
-                ],
-                admin: {
-                  hideGutter: true,
-                  hideInsertParagraphAtEnd: true,
-                  placeholder: "Start writing…",
-                },
-              }),
-              admin: {
-                className: "post-content-editor",
-                components: {
-                  afterInput: ["~/payload/components/WritingStats"],
-                },
-              },
-            },
-          ],
+      name: "content",
+      type: "richText",
+      required: true,
+      editor: lexicalEditor({
+        admin: {
+          hideGutter: true,
+          hideInsertParagraphAtEnd: true,
+          placeholder: "Start writing",
         },
-        {
-          label: "Details",
-          description:
-            "Add the summary and image used on blog listing and sharing surfaces.",
-          fields: [
-            {
-              name: "excerpt",
-              type: "textarea",
-              required: true,
-              maxLength: 320,
-              admin: {
-                description:
-                  "A short introduction shown in the musings list and link previews.",
-              },
-            },
-            {
-              name: "featuredImage",
-              type: "upload",
-              relationTo: "media",
-            },
-          ],
-        },
-      ],
-    },
-    slugField({
-      position: "sidebar",
-      useAsSlug: "title",
-    }),
-    {
-      name: "publishedAt",
-      type: "date",
+        features: ({ defaultFeatures }) => [
+          ...defaultFeatures,
+          MusingCanvasFeature(),
+        ],
+      }),
       admin: {
-        date: {
-          pickerAppearance: "dayAndTime",
-        },
-        position: "sidebar",
-      },
-      hooks: {
-        beforeChange: [setPublishedAt],
+        className: "musing-content",
       },
     },
   ],
